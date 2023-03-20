@@ -7,7 +7,10 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: LoginBody(),resizeToAvoidBottomInset: false,);
+    return const Scaffold(
+      body: LoginBody(),
+      resizeToAvoidBottomInset: false,
+    );
   }
 }
 
@@ -90,14 +93,14 @@ class _LoginBodyState extends State<LoginBody> {
                     ),
                   ),
                   SizedBox(
-                    width: 20,
-                    child: IconButton(
-                        onPressed: () {
+                    width: 15,
+                    child: GestureDetector(
+                        onTap: () {
                           setState(() {
                             isObscureText = !isObscureText;
                           });
                         },
-                        icon: Icon(
+                        child: Icon(
                             getLockWidget(isObscureText))), //Icons.lock_open
                   )
                 ],
@@ -111,17 +114,42 @@ class _LoginBodyState extends State<LoginBody> {
                   child: TextField(
                     controller: verificationCode,
                     decoration: const InputDecoration(
-                      labelText: "用户名",
+                      labelText: "验证码",
                       labelStyle: TextStyle(color: Colors.blue),
                     ),
                   ),
                 ),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    width: leftPadding * 2,
+                    child: GestureDetector(
+                      child: Image.network(""),
+                      onTap: () {},
+                    ),
+                  ),
+                  onTap: () {
+                    // 刷新验证码
+                  },
+                ),
               ],
             ),
           ),
-          Expanded(
-            child: Container(),
-            flex: 1,
+          Container(
+            padding: EdgeInsets.fromLTRB(leftPadding, 10, leftPadding, 0),
+            child: GestureDetector(
+              child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                width: MediaQuery.of(context).size.width - 4 * leftPadding,
+                height: 40,
+                child: const Text(
+                  "登录",
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ),
+              ),
+            ),
           ),
         ],
       ),
