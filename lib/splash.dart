@@ -99,9 +99,11 @@ class _SplashState extends State<Splash> {
                             color: Colors.blue, fontSize: logoFontSize),
                       ),
                       onEnd: () {
-                        sleep(Duration(milliseconds: 300));
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (c) => const LoginPage()));
+                        sleep(const Duration(milliseconds: 300));
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (c) => const LoginPage()),
+                            (route) => route == null);
                       },
                     ),
                   )),
