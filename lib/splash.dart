@@ -5,6 +5,7 @@ import 'package:food_menu/main.dart';
 
 import 'login.dart';
 
+// 启动页面
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
 

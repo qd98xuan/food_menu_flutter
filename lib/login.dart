@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// 登录页面
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: LoginBody());
+    return const Scaffold(body: LoginBody(),resizeToAvoidBottomInset: false,);
   }
 }
 
@@ -19,6 +20,10 @@ class LoginBody extends StatefulWidget {
 
 class _LoginBodyState extends State<LoginBody> {
   double logoPaddingTop = 300.0;
+  bool isObscureText = true;
+  TextEditingController userName = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController verificationCode = TextEditingController();
 
   @override
   void initState() {
@@ -34,42 +39,85 @@ class _LoginBodyState extends State<LoginBody> {
     });
   }
 
+  double leftPadding = 50.0;
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         children: [
-          Expanded(
-            child: AnimatedPadding(
-              duration: const Duration(milliseconds: 500),
-              padding: EdgeInsets.fromLTRB(0, logoPaddingTop, 0, 0),
-              child: Center(
-                child: Text(
-                  "我的菜谱",
-                  style: TextStyle(color: Colors.teal, fontSize: 50),
+          Container(
+            padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+            child: const Text(
+              "登录",
+              style: TextStyle(color: Colors.grey, fontSize: 20),
+            ),
+          ),
+          Container(
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.fromLTRB(leftPadding, 150, 0, 0),
+              child: const Text(
+                "开始准备好好吃饭",
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.black,
                 ),
-              ),
-              curve: Curves.easeIn,
-            ),
-            flex: 2,
-          ),
-          Expanded(
-            child: Container(
-              color: Colors.teal,
-              child: TextButton(
-                child: Text("data"),
-                onPressed: () {},
+              )),
+          Container(
+            padding: EdgeInsets.fromLTRB(leftPadding, 50, leftPadding, 0),
+            child: TextField(
+              controller: userName,
+              decoration: const InputDecoration(
+                labelText: "用户名",
+                labelStyle: TextStyle(color: Colors.blue),
               ),
             ),
-            flex: 1,
           ),
-          Expanded(
-            child: Container(),
-            flex: 1,
-          ),
-          Expanded(
-            child: Container(),
-            flex: 1,
+          Container(
+              padding: EdgeInsets.fromLTRB(leftPadding, 10, leftPadding, 0),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width -
+                        2 * leftPadding -
+                        20,
+                    child: TextField(
+                      controller: password,
+                      obscureText: isObscureText,
+                      decoration: const InputDecoration(
+                          labelText: "密码",
+                          labelStyle: TextStyle(color: Colors.blue)),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                    child: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isObscureText = !isObscureText;
+                          });
+                        },
+                        icon: Icon(
+                            getLockWidget(isObscureText))), //Icons.lock_open
+                  )
+                ],
+              )),
+          Container(
+            padding: EdgeInsets.fromLTRB(leftPadding, 10, leftPadding, 0),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 4 * leftPadding,
+                  child: TextField(
+                    controller: verificationCode,
+                    decoration: const InputDecoration(
+                      labelText: "用户名",
+                      labelStyle: TextStyle(color: Colors.blue),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           Expanded(
             child: Container(),
@@ -77,15 +125,14 @@ class _LoginBodyState extends State<LoginBody> {
           ),
         ],
       ),
-      // child: Column(
-      //   children: [
-      //     AnimatedPadding(padding: EdgeInsets.fromLTRB(0, logoPaddingTop, 0, 0), duration: Duration(seconds: 1))
-      //     Container(
-      //       padding: const EdgeInsets.fromLTRB(0, , 0, 0),
-      //       child: Text("我的菜谱",style: TextStyle(color: Colors.teal,fontSize: 30),),
-      //     )
-      //   ],
-      // ),
     );
+  }
+
+  IconData getLockWidget(isObscureText) {
+    if (isObscureText) {
+      return Icons.lock_outline_rounded;
+    } else {
+      return Icons.lock_open_rounded;
+    }
   }
 }
