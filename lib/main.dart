@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:food_menu/home_page.dart';
 import 'package:food_menu/splash.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           primaryColor: Colors.green,
           accentColor: Colors.teal),
-      home: const Splash(),
+      home: const HomePage(),
     );
   }
 }
