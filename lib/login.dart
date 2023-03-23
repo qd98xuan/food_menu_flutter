@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:food_menu/entity/http_url.dart';
 import 'package:food_menu/entity/login_entity.dart';
 import 'package:food_menu/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 // 登录页面
@@ -89,9 +90,14 @@ class _LoginBodyState extends State<LoginBody> {
       loginMsg = response.data['message'];
     });
     if (response.data['code'] == 200) {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const HomePage()),
-          (route) => route == null);
+      _saveToken(response.data['result'].toString()).then((value) => {
+            if (value)
+              {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                    (route) => route == null)
+              }
+          });
       print("登录成功");
       print(response.data['result']);
     } else {
@@ -101,6 +107,12 @@ class _LoginBodyState extends State<LoginBody> {
     setState(() {
       loginLoading = false;
     });
+  }
+
+  // 保存token
+  Future<bool> _saveToken(String token) async {
+    final sp = await SharedPreferences.getInstance();
+    return sp.setString("token", token);
   }
 
   void _setLogoPaddingTop(value) {
@@ -123,18 +135,16 @@ class _LoginBodyState extends State<LoginBody> {
               style: TextStyle(color: Colors.grey, fontSize: 20),
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.fromLTRB(leftPadding, 150, 0, 0),
-                child: const Text(
-                  "开始准备好好吃饭",
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.black,
-                  ),
-                )),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.fromLTRB(leftPadding, 150, 0, 0),
+            child: const Text(
+              "开始准备好好吃饭",
+              style: TextStyle(
+                fontSize: 25,
+                color: Colors.black,
+              ),
+            ),
           ),
           Container(
             padding: EdgeInsets.fromLTRB(leftPadding, 50, leftPadding, 0),

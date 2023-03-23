@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:food_menu/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'home_page.dart';
 import 'login.dart';
 
 // 启动页面
@@ -31,6 +33,17 @@ class _SplashState extends State<Splash> {
         fourthTextPaddingTop = 0;
       });
     });
+  }
+
+  // 获取登录的token
+  Future<String> _getToken() async {
+    final sp = await SharedPreferences.getInstance();
+    String? token = sp.getString("token");
+    if (token != null) {
+      return token;
+    } else {
+      return "";
+    }
   }
 
   @override
@@ -100,11 +113,23 @@ class _SplashState extends State<Splash> {
                             color: Colors.blue, fontSize: logoFontSize),
                       ),
                       onEnd: () {
-                        sleep(const Duration(milliseconds: 300));
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (c) => const LoginPage()),
-                            (route) => route == null);
+                        // sleep(const Duration(milliseconds: 300));
+                        _getToken().then((value) => {
+                              if (value == "")
+                                {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (c) => const LoginPage()),
+                                      (route) => route == null)
+                                }
+                              else
+                                {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (c) => const HomePage()),
+                                      (route) => route == null)
+                                }
+                            });
                       },
                     ),
                   )),

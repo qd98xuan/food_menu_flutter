@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_menu/front_page.dart';
+import 'package:food_menu/me.dart';
 
 /// @author huangxuan
 /// @since 2023/3/21 09:58
@@ -37,42 +38,56 @@ class _HomePageBodyState extends State<HomePageBody> {
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height * (8 / 10),
-          child: getHomePage(0),
+          child: viewPage,
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height * (1 / 10),
-          child: const NavigationBar(),
+          child: NavigationBar(onTap: (selectItem) {
+            _changeHomePage(selectItem);
+          }),
         ),
       ],
     );
   }
 
-  Widget getHomePage(type) {
-    Widget page = const FrontPage();
+  // viewPager的页面
+  Widget viewPage = const FrontPage();
+
+  void _changeHomePage(type) {
     switch (type) {
       case 0:
-        page = const FrontPage();
+        setState(() {
+          viewPage = const FrontPage();
+        });
+        break;
+      case 3:
+        setState(() {
+          viewPage = const Me();
+        });
         break;
     }
-    return page;
   }
 }
 
 // 导航栏
 class NavigationBar extends StatefulWidget {
-  const NavigationBar({Key? key}) : super(key: key);
+  NavigationBar({required this.onTap, Key? key}) : super(key: key);
+  Function(int selectItem) onTap;
 
   @override
-  State<NavigationBar> createState() => _NavigationBarState();
+  State<NavigationBar> createState() => _NavigationBarState(onTap: onTap);
 }
 
 class _NavigationBarState extends State<NavigationBar> {
+  _NavigationBarState({required  this.onTap});
+
   // 选中的tab
   // 0 首页
   // 1 视频
   // 2 广告
   // 3 我的
   int selectedTab = 0;
+  Function(int selectItem) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +106,7 @@ class _NavigationBarState extends State<NavigationBar> {
               onTap: () {
                 setState(() {
                   selectedTab = 0;
+                  onTap(selectedTab);
                 });
               },
             ),
@@ -106,6 +122,7 @@ class _NavigationBarState extends State<NavigationBar> {
               onTap: () {
                 setState(() {
                   selectedTab = 1;
+                  onTap(selectedTab);
                 });
               },
             ),
@@ -132,6 +149,7 @@ class _NavigationBarState extends State<NavigationBar> {
               onTap: () {
                 setState(() {
                   selectedTab = 2;
+                  onTap(selectedTab);
                 });
               },
             ),
@@ -147,6 +165,7 @@ class _NavigationBarState extends State<NavigationBar> {
               onTap: () {
                 setState(() {
                   selectedTab = 3;
+                  onTap(selectedTab);
                 });
               },
             ),
@@ -210,30 +229,33 @@ class _SearchBarState extends State<SearchBar> {
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(20, 5, 5, 0),
-            width: MediaQuery.of(context).size.width*(3/4),
+            width: MediaQuery.of(context).size.width * (3 / 4),
             child: Container(
-              decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(100)),color: Colors.black12),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width*(4/7),
-                    child: const TextField(
-                      decoration: InputDecoration(border: InputBorder.none,contentPadding: EdgeInsets.fromLTRB(20, 0, 0, 0)),
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                    color: Colors.black12),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * (4 / 7),
+                      child: const TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.fromLTRB(20, 0, 0, 0)),
+                      ),
                     ),
-                  ),
-                  GestureDetector(
-                    child: const Icon(Icons.search),
-                    onTap: (){},
-                  )
-                ],
-              )
-            ),
+                    GestureDetector(
+                      child: const Icon(Icons.search),
+                      onTap: () {},
+                    )
+                  ],
+                )),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
             child: GestureDetector(
               child: Icon(Icons.wifi_tethering),
-              onTap: (){},
+              onTap: () {},
             ),
           )
         ],
