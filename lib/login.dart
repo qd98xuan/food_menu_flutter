@@ -112,7 +112,7 @@ class _LoginBodyState extends State<LoginBody> {
   // 保存token
   Future<bool> _saveToken(String token) async {
     final sp = await SharedPreferences.getInstance();
-    return sp.setString("token", token);
+    return sp.setString(HttpUtil.tokenKey, token);
   }
 
   void _setLogoPaddingTop(value) {

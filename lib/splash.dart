@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:food_menu/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'entity/http_url.dart';
 import 'home_page.dart';
 import 'login.dart';
 
@@ -38,7 +39,7 @@ class _SplashState extends State<Splash> {
   // 获取登录的token
   Future<String> _getToken() async {
     final sp = await SharedPreferences.getInstance();
-    String? token = sp.getString("token");
+    String? token = sp.getString(HttpUtil.tokenKey);
     if (token != null) {
       return token;
     } else {

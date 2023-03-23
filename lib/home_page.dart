@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_menu/building_now.dart';
 import 'package:food_menu/drawer.dart';
 import 'package:food_menu/front_page.dart';
 import 'package:food_menu/me.dart';
@@ -63,6 +64,16 @@ class _HomePageBodyState extends State<HomePageBody> {
           viewPage = const FrontPage();
         });
         break;
+      case 1:
+        setState(() {
+          viewPage = BuildingNow(isInnerPage: true,);
+        });
+        break;
+      case 2:
+        setState(() {
+          viewPage = BuildingNow(isInnerPage: true,);
+        });
+        break;
       case 3:
         setState(() {
           viewPage = const Me();
@@ -82,7 +93,7 @@ class NavigationBar extends StatefulWidget {
 }
 
 class _NavigationBarState extends State<NavigationBar> {
-  _NavigationBarState({required  this.onTap});
+  _NavigationBarState({required this.onTap});
 
   // 选中的tab
   // 0 首页
@@ -138,7 +149,10 @@ class _NavigationBarState extends State<NavigationBar> {
                 color: Colors.teal,
                 size: 50,
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => BuildingNow(isInnerPage: false,)));
+              },
             ),
           ),
           Expanded(
