@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_menu/drawer.dart';
 import 'package:food_menu/front_page.dart';
 import 'package:food_menu/me.dart';
 
@@ -12,7 +13,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: DrawerWiget(),
+      ),
       body: HomePageBody(),
       resizeToAvoidBottomInset: false,
     );
