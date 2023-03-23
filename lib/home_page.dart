@@ -84,7 +84,7 @@ class _NavigationBarState extends State<NavigationBar> {
   // 选中的tab
   // 0 首页
   // 1 视频
-  // 2 广告
+  // 2 收藏
   // 3 我的
   int selectedTab = 0;
   Function(int selectItem) onTap;
@@ -144,7 +144,7 @@ class _NavigationBarState extends State<NavigationBar> {
               child: itemView(
                   selectIcon: Icons.star,
                   normalIcon: Icons.star_border_outlined,
-                  name: "广告",
+                  name: "收藏",
                   isSelect: selectedTab == 2),
               onTap: () {
                 setState(() {
